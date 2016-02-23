@@ -8,12 +8,12 @@ html
 		meta(name="viewport",content="width=device-width, initial-scale=1, user-scalable=no")
 		link(rel="stylesheet",type="text/css",href="/static/css/hichat.css")
 		link(rel="shortcut icon",href="/static/images/favicon.ico",type="image/x-icon")
-
-
-
 		script(src="/static/js/verdor/jquery-1.8.2.min.js")
 	body
 		block content
 			h1 #{title}
+		script(src="/static/js/ie_placeholder.js")
+		script(src="/socket.io/socket.io.js")
 		script(src="/static/js/hichat.js")
+		
 
