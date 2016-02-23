@@ -3,9 +3,6 @@
  * author ZhangXiaodong
  * 2016-2-23
  */
-
-
-
 /**
  * 模块引入
  */
@@ -43,7 +40,7 @@ var server=http.createServer(function(req,res){
 	 */
 	res.render=function(template,opation){
 		var str = fs.readFileSync(template,"utf-8");
-		var fn=jade.compile(str,{pretty:false,filename:template});
+		var fn=jade.compile(str,{pretty:true,filename:template});
 		var page = fn(opation);
 		res.writeHead(200,{"Content-Type":"text/html"});
 		res.end(page);

@@ -1,4 +1,37 @@
 extends layout
 block content
-	p fdkfjkdsfdjksfjdksfjdskfdsakfjsdkagaksdgjkasdgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-	h1 #{title}
+	div.loginbox#loginbox
+		div.title
+			img(src="/static/images/login.png", alt="")
+			h2 欢迎加入天聊天室
+		div.loginwarp
+			input#username.formcontrol(type="text",placeholder="请输入用户名")
+			input#userlogin.btn(type="button",value="加入聊天室")
+	div.chatbox
+		div.left
+			div.title
+				h2 #{title}
+				span 张晓东 | 
+					a(href="/") 退出
+			div.showmsg
+				div.warp 555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />555<br />
+			div.sendmsg
+				div.toolbar#tool_bar
+				textarea#msgbox(placeholder="请输入聊天内容")
+				div.action
+					span 按住ctrl+回车发送
+					input.btn.send_btn(type="button",value="发送")
+
+
+		div.right
+			div.title
+				h2 在线成员（<span id="num">150</span>）
+			ul#userlist
+				-var items=["11","22","33"]
+				each item in items
+					li
+						img(src="/static/images/empty_head.png")
+						p #{item}
+
+
+		
