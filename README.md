@@ -6,21 +6,21 @@ Hichat 是一个，它深受 [微信网页版](https://wx.qq.com) 影响，它�
 
 ## 安装
 
-git clone https://github.com/healen/hichat.git
-cd hichat
-npm install
+- git clone https://github.com/healen/hichat.git
+- cd hichat
+- npm install
 
 ##启动
-node app
-监听3000端口
+- node app
+- 监听3000端口
 
 ##需要技术
-[nodejs](https://nodejs.org)
-[jade](https://github.com/pugjs/jade)
-[socket.io](http://socket.io/)
-[gulp](http://gulpjs.com/)
-[gulp-less](https://npmjs.org/package/gulp-less/)
-[gulp-clean](https://www.npmjs.com/package/gulp-clean)
+- [nodejs](https://nodejs.org)
+- [jade](https://github.com/pugjs/jade)
+- [socket.io](http://socket.io/)
+- [gulp](http://gulpjs.com/)
+- [gulp-less](https://npmjs.org/package/gulp-less/)
+- [gulp-clean](https://www.npmjs.com/package/gulp-clean)
 等
 
 
@@ -28,8 +28,6 @@ node app
 ## jade使用方法
 
 你可以在网上[试玩 Jade](http://naltatis.github.com/jade-syntax-docs).
-
-## README 目录
 
 - [特性](#a1)
 - [其它实现](#a2)
