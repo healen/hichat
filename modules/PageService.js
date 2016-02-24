@@ -22,12 +22,17 @@ exports.renderJade=function(io,users){
 				socket.emit("nickExisted");
 			}else{
 				socket.userIndex = users.length;
-	            socket.nickname = nickname;
-	            users.push(nickname);
-	            socket.emit('loginSuccess');
-	            // console.log(users);
-	            io.sockets.emit('system',nickname,users,users.length,'login');
+			             socket.nickname = nickname;
+			             users.push(nickname);
+			             socket.emit('loginSuccess');
+			             // console.log(users);
+			             io.sockets.emit('system',nickname,users,users.length,'login');
 			}
+		})
+
+		socket.on("send msg",function(message){
+			console.log(message);
+			io.sockets.emit("newMsg",message,socket.nickname,users,socket.userIndex);
 		})
 
 		socket.on("disconnect",function(){

@@ -12,16 +12,19 @@ function HiChat(){
 }
 HiChat.prototype={
 	init:function(){
-		var ELE_NICKNAME  =$("#username");
-		var ELE_USERLOGIN =$("#userlogin");
-		var ELE_LOGINBOX  =$("#loginbox");
-		var ELE_CHATBOX   =$("#chatbox");
-		var ELE_USERLIST  =$("#userlist");
-		var ELE_NUM       =$("#num");
-		var ELE_SHOWBOX=$("#showbox");
-		var ELE_MYUSER=$("#myuser");
+		var ELE_NICKNAME = $("#username");
+		var ELE_USERLOGIN = $("#userlogin");
+		var ELE_LOGINBOX = $("#loginbox");
+		var ELE_CHATBOX = $("#chatbox");
+		var ELE_USERLIST = $("#userlist");
+		var ELE_NUM = $("#num");
+		var ELE_SHOWBOX = $("#showbox");
+		var ELE_MYUSER = $("#myuser");
+		var ELE_SEND = $("#send");
+		var ELE_MSGBOX = $("#msgbox");
 		var that          =this;
 		var loading       =layer.load();
+		this.userid=null;
 		this.socket=io.connect();
 		this.socket.on("connect",function(){
 			setTimeout(function(){
@@ -50,15 +53,31 @@ HiChat.prototype={
 			})
 		})
 		this.socket.on("system",function(userName,userList,userCount,type){
-			var html=""
-			var status = (type=="login" ? "加入" : "退出")
-			var system="<div class='system'><span class='msg'>系统消息：用户["+userName+"] <span class='mark'>"+status+"</span>聊天室</span></div>"
+			that.userid = userCount;
+			var html="";
+			var status = (type=="login" ? "加入" : "退出");
+			var system="<div class='system'><span class='msg'>系统消息：用户["+userName+"] <span class='mark'>"+status+"</span>聊天室</span></div>";
 			for(var i=0;i<userList.length;i++){
 				html+="<li> <img src='/static/images/empty_head.png'> <p>"+userList[i]+"</p></li>"
 			}
 			ELE_SHOWBOX.append(system);
 			ELE_NUM.html(userCount)
 			ELE_USERLIST.html(html)
+		})
+
+		this.socket.on("newMsg",function(msg,userName,users,pageuser){
+			console.log(pageuser+" "+ users.indexOf(userName));
+
+			var myuser = pageuser== users.indexOf(userName) ? "myuser" : "service"
+
+
+
+			var html = '<div className="msglist '+myuser+'">' +userName+':'+msg+'</div>';
+
+			ELE_SHOWBOX.append(html);
+
+		
+			
 		})
 
 		ELE_USERLOGIN.on("click",function(){
@@ -72,6 +91,18 @@ HiChat.prototype={
 				ELE_NICKNAME.addClass("error")
 				layer.msg('用户名不能为空！！');
 			}
-		})	
+		})
+
+
+		ELE_SEND.on("click",function(){
+			var msgContent=ELE_MSGBOX.val();
+			msgContent=msgContent.replace(/\n/g,"<br\/>");
+			msgContent=msgContent.replace(/\s/g,"&nbsp;");
+			// console.log(msgContent);
+			that.socket.emit("send msg",msgContent);
+
+			
+		})
+
 	}
 }
