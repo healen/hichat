@@ -22,7 +22,7 @@ HiChat.prototype={
 		var ELE_MYUSER=$("#myuser");
 		var that          =this;
 		var loading       =layer.load();
-		this.socket=io.connect("http://localhost:3000");
+		this.socket=io.connect();
 		this.socket.on("connect",function(){
 			setTimeout(function(){
 				layer.close(loading);

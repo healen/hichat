@@ -85,6 +85,6 @@ PageService.renderJade(io,users)
 /**
  * 监听3000端口                       [description]
  */
-server.listen(3000,function(){
+server.listen(process.env.PORT || 3000,function(){
 	console.log("server on *:3000");
 })
