@@ -12,8 +12,8 @@ var http      	  =require("http"),//内部模块 处理http
 	url           =require("url"),//内部模块 粗粒URL
 	socket        =require("socket.io"),//第三方模块 处理服务器握手websocket协议 
 	jade          =require("jade"),//第三方模块 渲染jade模板引擎
-	StaticService =require("./modules/StaticService"),//自定义模块
-	PageService   =require("./modules/PageService");
+	PageService=require("./modules/PageService")
+	StaticService =require("./modules/StaticService");//自定义模块
 
 
 /**
@@ -25,12 +25,15 @@ var BASE_DIR 	  =__dirname,//获取根目录
 	UPLOADS_DIR   =path.join(BASE_DIR,"upload"),//文件上传目录
 	TEMPLATES_DIR =path.join(BASE_DIR,"templates");//模板放置目录
 
+var users=[];
+
 
 /**
  * 创建HTTP服务器必要函数
  * @param  {[type]} req  服务器请求参数
  * @param  {[type]} res 服务器相应参数
  */
+
 var server=http.createServer(function(req,res){
 	var pathname=url.parse(req.url).pathname;
 	/**
@@ -56,11 +59,11 @@ var server=http.createServer(function(req,res){
 	 */
 	switch(pathname){
 		case "/index" : 
-			PageService.renderJade(path.join(TEMPLATES_DIR,"index.jade"),req,res,io);//渲染index.jade
-			// res.render(path.join(TEMPLATES_DIR,"index.jade"),{title:"Hichat"});//渲染index.jade
+			// renderJade(path.join(TEMPLATES_DIR,"index.jade"),req,res);//渲染index.jade
+			res.render(path.join(TEMPLATES_DIR,"index.jade"),{title:"嗨信聊天"});//渲染index.jade
 		break;
 		case "/" : 
-			PageService.renderJade(path.join(TEMPLATES_DIR,"index.jade"),req,res,io);//渲染index.jade
+			res.render(path.join(TEMPLATES_DIR,"index.jade"),{title:"嗨信聊天"});//渲染index.jade
 		break;
 
 		default :
@@ -75,6 +78,9 @@ var server=http.createServer(function(req,res){
  * @type {[type]}
  */
 var io=socket.listen(server);
+
+
+PageService.renderJade(io,users)
 
 /**
  * 监听3000端口                       [description]

@@ -10,6 +10,7 @@ body{
 }
 
 .loginbox{
+	display: block;
 	width: 380px;
 	height: 340px;
 	-webkit-border-radius:4px ;
@@ -24,6 +25,7 @@ body{
 	margin-left:-190px;
 	margin-top:-170px;
 	.loginwarp{
+		display: none;
 		margin: 30px 50px;
 		input[type='text']{
 			width: 268px;
@@ -44,6 +46,9 @@ body{
 
 			&:focus{
 				border-color: @markBgColor;
+			}
+			&.error{
+				border-color: #ff0000;
 			}
 		}
 		input[type="button"]{
@@ -96,6 +101,7 @@ body{
 	}
 }
 .chatbox{
+	display: none;
 	width: 1000px;
 	height: 700px;
 	overflow: hidden;
@@ -128,6 +134,10 @@ body{
 			}
 			span{
 				float: right;
+				text-align: right;
+				span{
+					float: none;
+				}
 				a{
 					color: #046cd3;
 					&:hover{
@@ -141,6 +151,28 @@ body{
 			overflow: auto;
 			.warp{
 				margin:10px 20px;
+				.system{
+					text-align: center;
+					font-size: 14px;
+					
+					
+					margin-bottom: 10px;
+					.msg{
+						display: inline-block;
+						min-width: 70%;
+						line-height: 20px;
+						padding: 5px 20px;
+						background: @borderColor;
+						-webkit-border-radius: 5px;
+						-moz-border-radius: 5px;
+						-ms-border-radius: 5px;
+						-o-border-radius: 5px;
+						border-radius: 5px;
+						.mark{
+							color: #990000;
+						}
+					}
+				}
 			}
 		}
 		.sendmsg{

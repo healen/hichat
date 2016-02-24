@@ -12,9 +12,29 @@
  * @param  {[type]} res [请求对象]
  * @param  {[type]} io  [socket.io对象]
  */
-exports.renderJade=function(dir,req,res,io){
-	res.render(dir,{
-		title:"嗨信网页版"
+exports.renderJade=function(io,users){
+
+	io.on("connection",function(socket){
+		// console.log("socket connection success!");
+		socket.on("login",function(nickname){
+			console.log(users.indexOf(nickname));
+			if(users.indexOf(nickname)>-1){
+				socket.emit("nickExisted");
+			}else{
+				socket.userIndex = users.length;
+	            socket.nickname = nickname;
+	            users.push(nickname);
+	            socket.emit('loginSuccess');
+	            // console.log(users);
+	            io.sockets.emit('system',nickname,users,users.length,'login');
+			}
+		})
+
+		socket.on("disconnect",function(){
+			users.splice(socket.userIndex,1);
+			// console.log(users);
+			socket.broadcast.emit('system',socket.nickname,users,users.length,"logout");
+		})
 	})
 
 }
