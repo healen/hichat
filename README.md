@@ -2,7 +2,7 @@
 
 Hichat 是一个，它深受 [微信网页版](https://wx.qq.com) 影响，它是用 nodejs socket.io jade 等技术实现的。
 
-作者: [张晓东](https://github.com/healen/hichat) 等
+作者: [张晓东](https://github.com/healen/hichat)
 
 ## 安装
 
