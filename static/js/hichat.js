@@ -59,7 +59,7 @@ HiChat.prototype={
 			var html="";
 			var status = (type=="login" ? "加入" : "退出");
 			var system="<div class='system'><span class='msg'>系统消息：用户["+userName+"] <span class='mark'>"+status+"</span>聊天室</span></div>";
-			for(var i=0;i<userList.length;i++){
+			for(var i=0;i<userCount;i++){
 				html+="<li> <img src='/static/images/empty_head.png'> <p>"+userList[i]+"</p></li>"
 			}
 			ELE_SHOWBOX.append(system);
