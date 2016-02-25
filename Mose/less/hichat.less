@@ -1,5 +1,7 @@
 @import url("../lib/reset");
 
+@import url("../lib/fontico");
+
 html,body{
 	height: 100%;
 }
@@ -102,14 +104,14 @@ body{
 }
 .chatbox{
 	display: none;
-	width: 1000px;
-	height: 700px;
-	overflow: hidden;
+	width: 800px;
+	height: 600px;
+	// overflow: hidden;
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	margin-top: -350px;
-	margin-left:-500px;
+	margin-top: -300px;
+	margin-left:-400px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	-ms-border-radius: 4px;
@@ -120,7 +122,7 @@ body{
 		height: 100%;
 		background: #eeeeee;
 		float: left;
-		width: 720px;
+		width: 600px;
 		.title{
 			height: 49px;
 			line-height: 49px;
@@ -147,13 +149,13 @@ body{
 			}
 		}
 		.showmsg{
-			height: 700px - 180 - 50;
+			height: 600px - 180 - 50;
 			overflow: auto;
 			.warp{
 				margin:10px 20px;
 				.system{
 					text-align: center;
-					font-size: 14px;
+					font-size: 12px;
 					
 					
 					margin-bottom: 10px;
@@ -161,15 +163,16 @@ body{
 						display: inline-block;
 						min-width: 70%;
 						line-height: 20px;
-						padding: 5px 20px;
-						background: @borderColor;
+						padding: 1px 20px;
+						background: #E6E4E4;
 						-webkit-border-radius: 5px;
 						-moz-border-radius: 5px;
 						-ms-border-radius: 5px;
 						-o-border-radius: 5px;
 						border-radius: 5px;
+						color: #999999;
 						.mark{
-							color: #990000;
+							color: #cc0000;
 						}
 					}
 				}
@@ -180,19 +183,54 @@ body{
 			border-top: 1px solid @borderColor;
 			.toolbar{
 				height: 30px;
-				padding: 5px 17px;
-				display: none;
+				padding: 5px 1.5%;
+				position: relative;
+				.exprebox{
+					width: 240px;
+					position: absolute;
+					bottom: 33px;
+					left: 1px;
+					display: none;
+					._clearfix();
+					img{
+						    display: block;
+						    float: left;
+						    border: 1px solid #d5d5d5;
+						    margin-left: -1px;
+						    margin-top: -1px;
+						    padding: 5px;
+						    background: #ffffff;
+						    cursor: pointer;
+						    -webkit-transition: all 100ms;
+						    -o-transition: all 100ms;
+						    transition: all 100ms;
+						    &:hover{
+						    	border-color: #0757a6;
+						    	-webkit-transform: scale(1);
+						    	-ms-transform: scale(1);
+						    	-o-transform: scale(1);
+						    	transform: scale(1);
+						    }
+						
+					}
+				}
+
+				// display: none;
+				i{
+					line-height: 30px;
+					display: inline-block;
+					padding-right:15px;
+				}
 			}
 			textarea{
 				font-size: 14px;
 				display: block;
-				width: 666px;
+				width: 96%;
 				background: none;
 				border:none;
-				margin: 0px 7px;
-				padding: 10px;
-				// height: 75px;
-				height: 113px;
+				margin: 0px 1.5%;
+				height: 90px;
+				// height: 113px;
 			}
 			.action{
 				text-align: right;
@@ -227,7 +265,7 @@ body{
 	}
 	.right{
 		height: 100%;
-		width: 280px;
+		width: 200px;
 		float: left;
 		background: #2e3238;
 		float: right;
@@ -239,7 +277,7 @@ body{
 			border-bottom: 1px solid #292c33;
 		}
 		ul{
-			height: 700px - 50;
+			height: 600px - 50;
 			overflow: auto;
 			li{
 				padding: 10px 20px;
@@ -247,11 +285,11 @@ body{
 				border-bottom: 1px solid #292c33;
 				img{
 					display: block;
-					height: 40px;
-					width: 40px;
+					height: 20px;
+					width: 20px;
 					overflow: hidden;
 					float: left;
-					margin-right: 20px;
+					margin-right: 10px;
 					-webkit-border-radius: 3px;
 					-moz-border-radius: 3px;
 					-ms-border-radius: 3px;
@@ -260,9 +298,12 @@ body{
 				}
 				p{
 					float: left;
-					line-height: 40px;
+				
 					color: #ffffff;
-					font-size: 14px;
+					font-size: 12px;
+					width: 115px;
+					overflow: hidden;
+					.-text ._ellipsis();
 				}
 			}
 		}
@@ -307,6 +348,12 @@ body{
 			position: relative;
 			display: inline-block;
 			text-align: left;
+			img{
+				width: auto;
+				height: auto;
+				margin-right: 0px;
+				margin-left: 0px;
+			}
 			.sanjiao{
 				width: 0px;
 			    height: 0px;

@@ -13,12 +13,19 @@ block content
 				h2 #{title}
 				span 
 					span#myuser
-					span | 
+					span  | 
 					a(href="/") 退出
-			div.showmsg
+			div.showmsg#showmsg
 				div.warp#showbox
 			div.sendmsg
 				div.toolbar#tool_bar
+					div.exprebox#exprebox
+						-for(var i=1;i<=49;i++)
+							img(src="/static/images/emoji/#{i}.png",)
+					i.icobtn.icon-expre#expre
+					i.icobtn.icon-shake#shake(title='发送抖窗')
+					//- i.icobtn.icon-img#img(title="上传图片")
+
 				textarea#msgbox(placeholder="请输入聊天内容")
 				div.action
 					span 按 CTRL+ENTER 发送

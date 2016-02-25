@@ -23,7 +23,11 @@ HiChat.prototype={
 		var ELE_MYUSER    = $("#myuser");
 		var ELE_SEND      = $("#send");
 		var ELE_MSGBOX    = $("#msgbox");
-		var ELE_SHOWMSG   =$(".showmsg")
+		var ELE_SHOWMSG   =$("#showmsg");
+		var ELE_EXPRE=$("#expre");
+		var ELE_EXPREBOX=$("#exprebox");
+		var ELE_SHAKE=$("#shake");
+		var ELE_SENDIMG=$("#img");
 		var that          =this;
 		var loading       =layer.load();
 		this.userid=null;
@@ -58,9 +62,9 @@ HiChat.prototype={
 			that.userid = userCount;
 			var html="";
 			var status = (type=="login" ? "加入" : "退出");
-			var system="<div class='system'><span class='msg'>系统消息：用户["+userName+"] <span class='mark'>"+status+"</span>聊天室</span></div>";
+			var system="<div class='system'><span class='msg'>系统消息：<span class='mark'>"+userName+" </span>"+status+"聊天室</span></div>";
 			for(var i=0;i<userList.length;i++){
-				html+="<li> <img src='/static/images/empty_head.png'> <p>"+userList[i]+"</p></li>"
+				html+="<li> <img src='/static/images/photos/"+userList[i]['photoid']+".png'> <p>"+userList[i]['user']+"</p></li>"
 			}
 			ELE_SHOWBOX.append(system);
 			ELE_NUM.html(userCount);
@@ -68,30 +72,47 @@ HiChat.prototype={
 			ELE_SHOWMSG.animate({scrollTop: ELE_SHOWBOX.height()}, 300);
 		})
 
-		this.socket.on("newMsg",function(msg,userName,users,pageuser){
-			console.log(userName+" "+ ELE_MYUSER.text());
-
+		this.socket.on("newMsg",function(msg,userName,users,pageuser,photoid){
 			var sendDate = new Date().Format("yyyy-MM-dd hh:mm:ss");
-
-			var isme = userName== ELE_MYUSER.text() ? "me" : ""
-
+			var isme = userName== ELE_MYUSER.text() ? "me" : "";
+			var EmojiEngine = function(tpl) {
+			    var re = /\[emoji:(\d+)\]/g;
+			    while(match = re.exec(tpl)) {
+			        tpl = tpl.replace(match[0], "<img src='/static/images/emoji/"+match[1]+".png' />")
+			    }
+			    return tpl;
+			}
 			var html 	  = '<div class="row">';
 				html     += '<div class="msglist '+isme+'">';
-				html     += '<img src="/static/images/empty_head.png" />';
+				html     += '<img src="/static/images/photos/'+photoid+'.png" />';
 				html     += '<div class="msgwarp">';
 				html     += '<div class="titles">'+userName+' ('+sendDate+')</div>';
 				html     += '<div class="contentmsg">';
 				html     += '<div class="sanjiao"></div>';
-				html     += '<span>'+msg+'</span>';
+				html     += '<span>'+EmojiEngine(msg)+'</span>';
 				html     += '</div></div></div></div>';
 			ELE_SHOWBOX.append(html);
 			ELE_SHOWMSG.animate({scrollTop: ELE_SHOWBOX.height()}, 300);
+		})
+		this.socket.on("newShake",function(userName){
+			var system="<div class='system'><span class='msg'>系统消息：坑爹呀！<span class='mark'>"+userName+" </span> 发个抖窗</span></div>";
+			ELE_SHOWBOX.append(system);
+			if(!ELE_CHATBOX.hasClass("wobble")){
+				ELE_SHOWMSG.animate({scrollTop: ELE_SHOWBOX.height()}, 300);
+				ELE_CHATBOX.addClass("wobble animated");
+				setTimeout(function(){
+					ELE_CHATBOX.removeClass("wobble animated");
+				},1000)
+
+			}
+
+
 		})
 
 		ELE_USERLOGIN.on("click",function(){
 			var nickName=ELE_NICKNAME.val();
 			if(nickName.trim().length!=0){
-				that.socket.emit("login",nickName);
+				that.socket.emit("login",nickName,that.randomRange(1,12));
 				ELE_NICKNAME.removeClass("error");
 				ELE_MYUSER.html(nickName)
 			}else{
@@ -122,5 +143,47 @@ HiChat.prototype={
 
 		})
 
+		//抖动
+		ELE_SHAKE.on("click",function(){
+			that.socket.emit("shake")
+		})
+
+		//表情
+		ELE_EXPRE.hover(function(){
+			ELE_EXPREBOX.show();
+		},function(){
+			ELE_EXPREBOX.hide();
+		})
+		ELE_EXPREBOX.hover(function(){
+			$(this).show();
+		},function(){
+			$(this).hide();
+		})
+
+		ELE_EXPREBOX.find("img").on("click",function(){
+			var imgurl = $(this).attr("src");
+			//static/images/emoji/45.png
+			var reg=/.*\/(\d+)\..*/ig;
+
+			var imgID=reg.exec(imgurl)[1];
+
+			var textareaStr="[emoji:"+imgID+"]";
+			var textareaVal=ELE_MSGBOX.val();
+
+			ELE_MSGBOX.val(textareaVal+textareaStr);
+			ELE_MSGBOX.focus()
+
+			ELE_EXPREBOX.hide();
+
+
+		})
+
+	},
+	randomRange:function(under,over){
+		switch(arguments.length){
+			case 1: return parseInt(Math.random()*under+1); 
+			case 2: return parseInt(Math.random()*(over-under+1) + under); 
+			default: return 0;
+		}
 	}
 }

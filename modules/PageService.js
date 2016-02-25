@@ -16,28 +16,32 @@ exports.renderJade=function(io,users){
 
 	io.on("connection",function(socket){
 		// console.log("socket connection success!");
-		socket.on("login",function(nickname){
+		socket.on("login",function(nickname,photoid){
 			console.log(users.indexOf(nickname));
 			if(users.indexOf(nickname)>-1){
 				socket.emit("nickExisted");
 			}else{
 				socket.userIndex = users.length;
-				 socket.nickname = nickname;
-				 users.push(nickname);
-				 socket.emit('loginSuccess');
+				socket.nickname = nickname;
+				socket.photoid = photoid;
+
+				users.push({"user":nickname,"photoid":photoid});
+				socket.emit('loginSuccess');
 				 // console.log(users);
-				 io.sockets.emit('system',nickname,users,users.length,'login');
+				io.sockets.emit('system',nickname,users,users.length,'login');
 			}
 		})
 
 		socket.on("send msg",function(message){
 			console.log(message);
-			io.sockets.emit("newMsg",message,socket.nickname,users,socket.userIndex);
+			io.sockets.emit("newMsg",message,socket.nickname,users,socket.userIndex,socket.photoid);
+		})
+
+		socket.on("shake",function(){
+			io.sockets.emit("newShake",socket.nickname)
 		})
 
 		socket.on("disconnect",function(){
-			
-
 			if(socket.nickname){
 				users.splice(socket.userIndex,1);
 				// console.log(users);
@@ -46,8 +50,6 @@ exports.renderJade=function(io,users){
 			}else{
 				console.log("窗口关闭");
 			}
-
-			
 		})
 	})
 
