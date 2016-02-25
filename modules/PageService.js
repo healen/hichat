@@ -36,6 +36,7 @@ exports.renderJade=function(io,users){
 		})
 
 		socket.on("disconnect",function(){
+			
 
 			if(socket.nickname){
 				users.splice(socket.userIndex,1);
