@@ -63,8 +63,9 @@ HiChat.prototype={
 				html+="<li> <img src='/static/images/empty_head.png'> <p>"+userList[i]+"</p></li>"
 			}
 			ELE_SHOWBOX.append(system);
-			ELE_NUM.html(userCount)
-			ELE_USERLIST.html(html)
+			ELE_NUM.html(userCount);
+			ELE_USERLIST.html(html);
+			ELE_SHOWMSG.animate({scrollTop: ELE_SHOWBOX.height()}, 300);
 		})
 
 		this.socket.on("newMsg",function(msg,userName,users,pageuser){
@@ -84,8 +85,7 @@ HiChat.prototype={
 				html     += '<span>'+msg+'</span>';
 				html     += '</div></div></div></div>';
 			ELE_SHOWBOX.append(html);
-			ELE_MSGBOX.val('');
-			ELE_SHOWMSG.animate({scrollTop: ELE_SHOWBOX.height()}, 300)
+			ELE_SHOWMSG.animate({scrollTop: ELE_SHOWBOX.height()}, 300);
 		})
 
 		ELE_USERLOGIN.on("click",function(){
@@ -111,6 +111,8 @@ HiChat.prototype={
 				that.socket.emit("send msg",msgContent);
 			}
 			ELE_MSGBOX.focus();
+			ELE_MSGBOX.val('');
+
 		})
 
 		ELE_MSGBOX.on("keypress",function(e){
