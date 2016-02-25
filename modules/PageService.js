@@ -22,11 +22,11 @@ exports.renderJade=function(io,users){
 				socket.emit("nickExisted");
 			}else{
 				socket.userIndex = users.length;
-			             socket.nickname = nickname;
-			             users.push(nickname);
-			             socket.emit('loginSuccess');
-			             // console.log(users);
-			             io.sockets.emit('system',nickname,users,users.length,'login');
+				 socket.nickname = nickname;
+				 users.push(nickname);
+				 socket.emit('loginSuccess');
+				 // console.log(users);
+				 io.sockets.emit('system',nickname,users,users.length,'login');
 			}
 		})
 
@@ -36,9 +36,17 @@ exports.renderJade=function(io,users){
 		})
 
 		socket.on("disconnect",function(){
-			users.splice(socket.userIndex,1);
-			// console.log(users);
-			socket.broadcast.emit('system',socket.nickname,users,users.length,"logout");
+
+			if(socket.nickname){
+				users.splice(socket.userIndex,1);
+				// console.log(users);
+				socket.broadcast.emit('system',socket.nickname,users,users.length,"logout");
+
+			}else{
+				console.log("窗口关闭");
+			}
+
+			
 		})
 	})
 
