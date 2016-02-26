@@ -15,23 +15,32 @@
 exports.renderJade=function(io,users){
 
 	io.on("connection",function(socket){
-		// console.log("socket connection success!");
 		socket.on("login",function(nickname,photoid){
 			console.log(users.indexOf(nickname));
-			if(users.indexOf(nickname)>-1){
-				socket.emit("nickExisted");
-			}else{
+
+			function exitsn(){
+				var f=false;
+				for(var i=0;i<users.length;i++){
+					if(users[i]['user']==nickname){
+						f=true;
+						break;
+					}else{
+						f=false;
+					}
+				}
+				return f;
+			}
+			if(exitsn()===false){
 				socket.userIndex = users.length;
 				socket.nickname = nickname;
 				socket.photoid = photoid;
-
 				users.push({"user":nickname,"photoid":photoid});
 				socket.emit('loginSuccess');
-				 // console.log(users);
 				io.sockets.emit('system',nickname,users,users.length,'login');
+			}else{
+				socket.emit("nickExisted");
 			}
 		})
-
 		socket.on("send msg",function(message){
 			console.log(message);
 			io.sockets.emit("newMsg",message,socket.nickname,users,socket.userIndex,socket.photoid);
