@@ -97,12 +97,12 @@ HiChat.prototype={
 		this.socket.on("newShake",function(userName){
 			var system="<div class='system'><span class='msg'>系统消息：坑爹呀！<span class='mark'>"+userName+" </span> 发个抖窗</span></div>";
 			ELE_SHOWBOX.append(system);
-			if(!ELE_CHATBOX.hasClass("wobble")){
+			if(!ELE_CHATBOX.hasClass("shake")){
 				ELE_SHOWMSG.animate({scrollTop: ELE_SHOWBOX.height()}, 300);
-				ELE_CHATBOX.addClass("wobble animated");
+				ELE_CHATBOX.addClass("shake animated");
 				setTimeout(function(){
-					ELE_CHATBOX.removeClass("wobble animated");
-				},1000)
+					ELE_CHATBOX.removeClass("shake animated");
+				},500)
 
 			}
 
