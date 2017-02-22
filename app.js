@@ -17,7 +17,7 @@ var http      	  =require("http"),//内部模块 处理http
 
 
 /**
- * 全局变量，俗称常量所以命名用大写
+ * 全局变量，俗称常量所以命名用大写hehe
  * 文件目录
  */
 var BASE_DIR 	  =__dirname,//获取根目录
