@@ -4,7 +4,7 @@
  * 2016-2-23
  */
 /**
- * 模块引入
+ * *模块引入
  */
 var http      	  =require("http"),//内部模块 处理http
 	path          =require("path"),//内部模块 处理文件目录
